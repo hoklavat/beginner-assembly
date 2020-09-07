@@ -59,7 +59,6 @@ System Bus: Main Board
 [UNSIGNED NUMBERS]
 N-bits represents 2N - 1 numbers.
 
-
 [SIGNED NUMBERS]
 N-bits represents 2N-1 - 1 positive numbers. The most significant bit is sign bit. 1 negative, 0 positive.
 Two's Complement: 1010 1000 >> 0101 0111 + 1? 0101 1000 >> -88 (-2N-1 to 2N-1-1)
@@ -71,8 +70,8 @@ Two's Complement: 1010 1000 >> 0101 0111 + 1? 0101 1000 >> -88 (-2N-1 to 2N-1-1)
 * one operand instruction: instruction operand (reg, mem)
 * two operand instruction: instruction destination, source (reg-reg, reg-mem, reg-val, mem-reg, mem-val)
 * MOV, PUSH, POP, PUSHA, POPA, PUSHAD, POPAD, CALL, ADD, SUB, XCHG, XOR, CMP, INC, DEC, NEG, AND, OR, XOR, NOT, 
-TEST, JMP, JZ, JNZ, JC, JNC, JO, JNO, JS, JNS, CMP, JE, JNE, JA, JAE, JB, JBE, JNA, JNAE, JNB, JNBE, JG, JGE, JL, JLE, JNG, JNGE, JNL, 
-JNLE, MUL, IMUL, DIV, IDIV, CBW, CWD, CDQ, CQO
+  TEST, JMP, JZ, JNZ, JC, JNC, JO, JNO, JS, JNS, CMP, JE, JNE, JA, JAE, JB, JBE, JNA, JNAE, JNB, JNBE, JG, JGE, 
+  JL, JLE, JNG, JNGE, JNL, JNLE, MUL, IMUL, DIV, IDIV, CBW, CWD, CDQ, CQO
 * XCHG reg-reg, reg-mem, mem-reg (Exchange)
 
 [BRANCHING]
@@ -128,8 +127,8 @@ displacement: offset from index (zero: direct addressing, non-zero: indirect add
 * Rip-Relative: default rel, [rel data]
 
 [Endiannes]
-* Little Endian Order: storing in memory starts with least significant byte of data.
-* Big Endian Order: storing in memory starts with most significant byte of data.
+* Little Endian Order: storing in memory starts with least significant byte of data. RAM.
+* Big Endian Order: storing in memory starts with most significant byte of data. Network.
 
 [MULTIPLICATION]
 * Unsigned Multiplication: mul multiplier
