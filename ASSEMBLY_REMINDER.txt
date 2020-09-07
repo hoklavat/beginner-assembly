@@ -1,0 +1,157 @@
+****x86-64Bit ASSEMBLYLANGUAGE ****
+
+[ASSEMBLY LANGUAGE]
+* low level language. machine code.
+* direct access to hardware.
+* applications: debugging, operating system, device driver, memory protection, context switch, ...
+* assembling: Source File >> Assembler >> Object File >> Linker >> Executable File
+* source contents: Include, Section (Data, Text), Global (CMAIN), Label, Mnemonic, Operand, Comment
+* operand: register, memory, value
+* naming: {starts with letters, _ or ?}  {continues with letters, numbers, _ # ? ~}
+
+[COMPUTER ARCHITECTURE]
+Computer = CPU + Memory + I/O Devices + System Bus
+CPU: Registers + Control Unit + Arihmetic Logic Unit
+Memory: RAM + Harddisk + SSD + BIOS + ...
+I/O Devices: Keyboard, Mouse, Monitor, Speaker, Microphone, ...
+System Bus: Main Board
+
+[MEMORY]
+* Address + Content
+* Content: BYTE (8-Bit, db, byte), WORD (16-Bit, dw, word), DWORD (32-Bit, dd, dword), QWORD (64-Bit, dq, qword)
+* Allocation
+   - section .data
+   - name size value
+   - size: db, dw, dd, dq
+* Reference
+   - section .text
+   - size[name] 
+   - size: byte, word, dword, qword
+
+[IA-32e MODE]
+* 64-Bit Mode
+   - 64-Bit Programs
+   - 16 General Purpose Registers 
+   - 64-Bit Registers (RAX, RBX, RCX, RDX, RSI, RDI, R8, R9, R10, R11, R12, R13, R14, R15, RBP, RSP)
+   - 32-Bit Segments (EAX, EBX, ECX, EDX, ESI, EDI, R8/15D, EBP, ESP)
+   - 16-Bit Segments (AX, BX, CX, DX, SI, DI, R8/15W, BP, SP)
+   - 8-Bit Segments (AH, AL, BH, BL, CH, CL, DH, DL, SIL, DIL, R8/15B, BPL, SPL)
+   - Flag Register (RFLAG)
+   - 64-Bit Instruction Pointer (RIP)
+   - 48-Bit Virtual Address Support 
+   - RAX >> EAX >> AX >> AH/AL (64-Bit >> 32-Bit >> 16-Bit >> 8-Bit)
+* Compatibility Mode
+   - 16-Bit/32-Bit Programs
+
+[DECIMAL]
+{0 1 2 3 4 5 6 7 8 9}
+357 = 3x102 + 5x101 + 7x100
+
+[BINARY]
+{0 1}
+1000 1001b >> 1x20 + 0x21 + 0x22 + 1x23 + 0x24 + 0x25 + 0x26 + 1x27 = 137 (Binary to Decimal)
+
+[HEXADECIMAL]
+{0 1 2 3 4 5 6 7 8 9 A B C D E F}
+0x2AF >> 160 x F + 161 x A + 162 x 2 = 687 (Hexadecimal to Decimal)
+0010 1000 1001b >> 0x289 (Binary to Hexadecimal)
+
+[UNSIGNED NUMBERS]
+N-bits represents 2N - 1 numbers.
+
+
+[SIGNED NUMBERS]
+N-bits represents 2N-1 - 1 positive numbers. The most significant bit is sign bit. 1 negative, 0 positive.
+Two's Complement: 1010 1000 >> 0101 0111 + 1? 0101 1000 >> -88 (-2N-1 to 2N-1-1)
+
+[INSTRUCTIONS]
+* memory to memory transfer is not possible for any instruction.
+* destination and source sizes must be same.
+* no operand instruction: instruction
+* one operand instruction: instruction operand (reg, mem)
+* two operand instruction: instruction destination, source (reg-reg, reg-mem, reg-val, mem-reg, mem-val)
+* MOV, PUSH, POP, PUSHA, POPA, PUSHAD, POPAD, CALL, ADD, SUB, XCHG, XOR, CMP, INC, DEC, NEG, AND, OR, XOR, NOT, 
+TEST, JMP, JZ, JNZ, JC, JNC, JO, JNO, JS, JNS, CMP, JE, JNE, JA, JAE, JB, JBE, JNA, JNAE, JNB, JNBE, JG, JGE, JL, JLE, JNG, JNGE, JNL, 
+JNLE, MUL, IMUL, DIV, IDIV, CBW, CWD, CDQ, CQO
+* XCHG reg-reg, reg-mem, mem-reg (Exchange)
+
+[BRANCHING]
+
+[Unconditional Branching]
+* JMP (label, reg, mem)
+
+[Conditional Branching]
+* TEST reg-reg, reg-mem, reg-val, mem-reg, mem-val (AND)
+* JZ: jump if ZF set
+* JNZ: jump if ZF is not set
+* JC: jump if CF set
+* JNC: jump if CF not set
+* JO: jump if OF set
+* JNO: jump if OF not set
+* JS: jump if SF set
+* JNS: jump if SF not set
+
+[Comparision Branching]
+*CMP reg-reg, reg-mem, reg-val, mem-reg, mem-val (SUBTRACT)
+* JE (equal) (=) 
+* JNE (not equal) (!=)
+
+[Unsigned Number Comparision Branching]
+* JA (above) = JNBE (not below or equal) ( > )
+* JAE (above or equal) = JNB (not below) ( >= )
+* JB (below) = JNAE (not above or equal) ( < )
+* JBE (below or equal) = JNA (not above) ( <= )
+
+[Signed Number Comparision Branching]
+* JG (greater) = JNLE (not less or equal) ( > )
+* JGE (greater or equal) = JNL (not less) ( >= )
+* JL (less) = JNGE (not greater or equal) ( < )
+* JLE (less or equal) = JNG (not greater) ( <= )
+
+[ARRAY]
+
+[base + index*scale + displacement]
+base : base address
+index: index number
+scale: 1, 2, 4, 8 (byte, word, dword, qword)
+displacement: offset from index (zero: direct addressing, non-zero: indirect addressing)
+
+[Two-Dimensional Array]
+* Row Major
+* Column Major
+
+[Addressing Modes]
+* Immediate: mov rax, 20
+* Register: mov rax, rbx
+* Direct: mov rax, [0x100] / mov al, [array+4] / base+index*scale
+* Indirect: [base+index*scale+displacement]
+* Rip-Relative: default rel, [rel data]
+
+[Endiannes]
+* Little Endian Order: storing in memory starts with least significant byte of data.
+* Big Endian Order: storing in memory starts with most significant byte of data.
+
+[MULTIPLICATION]
+* Unsigned Multiplication: mul multiplier
+* Multipliers: reg, mem
+* Multiplicand: 8-bit: al, 16-bit: ax,  32-bit: eax, 64-bit: rax
+* Product: 8-bit: ah al, 16-bit: dx ax,  32-bit: edx eax, 64-bit: rdx rax
+
+* Signed Multiplication:
+   - one-operand: imul reg, mem (rax)
+   - two-operand: imul reg-val, reg-reg, reg-mem (rax)
+   - three-operand: imul reg-reg-val, reg-mem-val (reg)
+
+[DIVISION]
+* Unsigned Division: div divisor
+* Divisors: reg, mem
+* Dividend: 8-bit: ax, 16-bit: dx ax,  32-bit: edx eax, 64-bit: rdx rax
+* Quotient: 8-bit: al, 16-bit: ax,  32-bit: eax, 64-bit: rax
+* Remainder: 8-bit: ah, 16-bit: dx,  32-bit: edx, 64-bit: rdx
+
+* Signed Division: idiv
+* Signed Extension Conversion
+   - cbw: byte to word
+   - cwd: word to double word
+   - cdq: double word to quad word
+   - cqo: quad word to octa word
