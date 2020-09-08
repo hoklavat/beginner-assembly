@@ -71,7 +71,8 @@ Two's Complement: 1010 1000 >> 0101 0111 + 1? 0101 1000 >> -88 (-2N-1 to 2N-1-1)
 * two operand instruction: instruction destination, source (reg-reg, reg-mem, reg-val, mem-reg, mem-val)
 * MOV, PUSH, POP, PUSHA, POPA, PUSHAD, POPAD, CALL, ADD, SUB, XCHG, XOR, CMP, INC, DEC, NEG, AND, OR, XOR, NOT, 
   TEST, JMP, JZ, JNZ, JC, JNC, JO, JNO, JS, JNS, CMP, JE, JNE, JA, JAE, JB, JBE, JNA, JNAE, JNB, JNBE, JG, JGE, 
-  JL, JLE, JNG, JNGE, JNL, JNLE, MUL, IMUL, DIV, IDIV, CBW, CWD, CDQ, CQO
+  JL, JLE, JNG, JNGE, JNL, JNLE, MUL, IMUL, DIV, IDIV, CBW, CWD, CDQ, CQO, SHL, SAL, SHR, SAR, ROL, RCL, ROR, RCR, 
+  CLC, STC
 * XCHG reg-reg, reg-mem, mem-reg (Exchange)
 
 [BRANCHING]
@@ -154,3 +155,28 @@ displacement: offset from index (zero: direct addressing, non-zero: indirect add
    - cwd: word to double word
    - cdq: double word to quad word
    - cqo: quad word to octa word
+
+[BITWISE]
+* Logical Shift Left: shl reg-val, reg-cl, mem-val, mem-cl
+   - CF is set if left-most bit is 1 before shift.
+* Arithmetic Shift Left: sal
+* Logical Shift Right: shr reg-val, reg-cl, mem-val, mem-cl 
+   - CF is set if right-most bit is 1 before shift.
+   - left-most bit will be 1 after shift if previous one is 1, otherwise 0.
+* Arithmetic Shift Right: sar
+
+[ROTATE]
+* Rotate Left: rol reg-val, reg-cl, mem-val, mem-cl
+   - left-most bit to right-most bit.
+   - CF is set if left-most bit is 1.
+* Rotate Carry Left: rcl reg-val, reg-cl, mem-val, mem-cl
+   - left-most bit to CF, CF to right-most bit.
+* Rotate Right: ror reg-val, reg-cl, mem-val, mem-cl
+   - right-most bit to left-most bit.
+   - CF is set if right-most bit is 1.
+* Rotate Carry Right: rcr reg-val, reg-cl, mem-val, mem-cl
+   - right-most bit to CF, CF to left-most bit.
+
+[CARRY FLAG]
+* Clear Carry: clc
+* Set Carry: stc

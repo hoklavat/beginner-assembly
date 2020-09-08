@@ -1,6 +1,7 @@
 **ASSEMBLY SOURCE LIST**
 Assembler: SASM
 
+00-Template
 01-Debug
 02-Variable
 03-Constant
@@ -23,3 +24,5 @@ Assembler: SASM
 20-Multiplication
 21-Division
 22-Arithmetic
+23-Shift
+24-Rotate
