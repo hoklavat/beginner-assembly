@@ -45,23 +45,24 @@ System Bus: Main Board
 
 [DECIMAL]
 {0 1 2 3 4 5 6 7 8 9}
-357 = 3x102 + 5x101 + 7x100
+357 = 3x10^2 + 5x10^1 + 7x10^0
 
 [BINARY]
 {0 1}
-1000 1001b >> 1x20 + 0x21 + 0x22 + 1x23 + 0x24 + 0x25 + 0x26 + 1x27 = 137 (Binary to Decimal)
+1000 1001b >> 1x2^0 + 0x2^1 + 0x2^2 + 1x2^3 + 0x2^4 + 0x2^5 + 0x2^6 + 1x2^7 = 137 (Binary to Decimal)
 
 [HEXADECIMAL]
 {0 1 2 3 4 5 6 7 8 9 A B C D E F}
-0x2AF >> 160 x F + 161 x A + 162 x 2 = 687 (Hexadecimal to Decimal)
+0x2AF >> 16^0 x F + 16^1 x A + 16^2 x 2 = 687 (Hexadecimal to Decimal)
 0010 1000 1001b >> 0x289 (Binary to Hexadecimal)
 
 [UNSIGNED NUMBERS]
-N-bits represents 2N - 1 numbers.
+N-bits represents 2^N - 1 numbers.
 
 [SIGNED NUMBERS]
-N-bits represents 2N-1 - 1 positive numbers. The most significant bit is sign bit. 1 negative, 0 positive.
-Two's Complement: 1010 1000 >> 0101 0111 + 1? 0101 1000 >> -88 (-2N-1 to 2N-1-1)
+N-bits represents 2^(N-1) - 1 positive numbers and 2^(N-1) negative numbers. 
+the most significant bit is sign bit. 1 negative, 0 positive.
+two's complement: 1010 1000 >> 0101 0111 + 1 >> 0101 1000 >> -88 (-2^(N-1) to 2^(N-1)-1)
 
 [INSTRUCTIONS]
 * memory to memory transfer is not possible for any instruction.
@@ -69,16 +70,18 @@ Two's Complement: 1010 1000 >> 0101 0111 + 1? 0101 1000 >> -88 (-2N-1 to 2N-1-1)
 * no operand instruction: instruction
 * one operand instruction: instruction operand (reg, mem)
 * two operand instruction: instruction destination, source (reg-reg, reg-mem, reg-val, mem-reg, mem-val)
-* MOV, PUSH, POP, PUSHA, POPA, PUSHAD, POPAD, CALL, ADD, SUB, XCHG, XOR, CMP, INC, DEC, NEG, AND, OR, XOR, NOT, 
+* Instructions: MOV, PUSH, POP, PUSHA, POPA, PUSHAD, POPAD, CALL, ADD, SUB, XCHG, XOR, CMP, INC, DEC, NEG, AND, OR, XOR, NOT, 
   TEST, JMP, JZ, JNZ, JC, JNC, JO, JNO, JS, JNS, CMP, JE, JNE, JA, JAE, JB, JBE, JNA, JNAE, JNB, JNBE, JG, JGE, 
   JL, JLE, JNG, JNGE, JNL, JNLE, MUL, IMUL, DIV, IDIV, CBW, CWD, CDQ, CQO, SHL, SAL, SHR, SAR, ROL, RCL, ROR, RCR, 
-  CLC, STC
+  CLC, STC, MOVSB, MOVSW, MOVSD, MOVSQ, STOSB, STOSW, STOSD, STOSQ, LODSB, LODSW, LODSD, LODSQ, SCASB, SCASW, SCASD, 
+  SCASQ, CMPSB, CMPSW, CMPSD, CMPSQ, CLD, STD, LOOP, REP, REPNE, REPE
+* Directives: DB, DW, DD, DQ, SECTION, .DATA, .TEXT, %INCLUDE, EQU, TIMES, GLOBAL, $-
 * XCHG reg-reg, reg-mem, mem-reg (Exchange)
 
 [BRANCHING]
 
 [Unconditional Branching]
-* JMP (label, reg, mem)
+* JMP label, reg, mem
 
 [Conditional Branching]
 * TEST reg-reg, reg-mem, reg-val, mem-reg, mem-val (AND)
@@ -109,7 +112,6 @@ Two's Complement: 1010 1000 >> 0101 0111 + 1? 0101 1000 >> -88 (-2N-1 to 2N-1-1)
 * JLE (less or equal) = JNG (not greater) ( <= )
 
 [ARRAY]
-
 [base + index*scale + displacement]
 base : base address
 index: index number
@@ -180,3 +182,47 @@ displacement: offset from index (zero: direct addressing, non-zero: indirect add
 [CARRY FLAG]
 * Clear Carry: clc
 * Set Carry: stc
+
+[DIRECTION FLAG]
+* Clear DF: cld (from beginning to end of array, increment rsi/rdi)
+* Set DF: std (from end to beginning of array, decrement rsi/rdi)
+
+[LOOP]
+* loop label (jump to label if until rcx is zero)
+
+[REPEAT]
+* rep: repeat while rcx >= 0.
+* repne: repeat while rcx > 0.
+* repe: repeat while  rcx > 0 and ZF = 1
+
+[STRINGS]
+* MOVE: move elements in source array to destination array.
+   - movsb, movsw, movsd, movsq
+   - rsi: source
+   - rdi: destination
+   - rcx: length
+   - DF 0: increment (cld)
+   - DF 1: decrement (std)
+* Store: store element in register to destination array.
+   - stosb, stosw, stosd, stosq
+   - rdi: destination
+   - rax: value to store (al, ax, eax, rax)
+   - rcx: length
+* Load: load element in source array to register.
+   - lodsb, lodsw, lodsd, lodsq
+   - source: rsi
+   - destination: rax (al, ax, eax, rax)
+   - rcx: length
+* Scan: search element stored in register in source array.
+   - scasb, scasw, scasd, scasq
+   - rdi: source
+   - rax: value to search (al, ax, eax, rax)
+   - rcx: length
+   - ZF 1 if found, 0 if not found.
+* Compare: compare element in source1 array with source2 array.
+   - cmpsb, cmpsw, cmpsd, cmpsq
+   - source1: rsi
+   - source2. rdi
+   - rcx: length
+   - ZF 1 if equal, 0 if not equal.
+

@@ -26,3 +26,4 @@ Assembler: SASM
 22-Arithmetic
 23-Shift
 24-Rotate
+25-String
