@@ -27,3 +27,9 @@ Assembler: SASM
 23-Shift
 24-Rotate
 25-String
+26-Procedure
+27-Procedure2
+28-Procedure3
+29-Procedure4
+30-Procedure5
+31-LocalVariables

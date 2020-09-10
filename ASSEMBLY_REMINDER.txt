@@ -226,3 +226,33 @@ displacement: offset from index (zero: direct addressing, non-zero: indirect add
    - rcx: length
    - ZF 1 if equal, 0 if not equal.
 
+[STACK]
+* Last In First Out (LIFO)
+* push: insert data on top of stack. decrement rsp. reg, mem, val.
+* pop: fetch data from top of stack. increment rsp. reg, mem.
+* rsp: register that holds current position in stack. stack pointer.
+* stack frame: parameters, return address, saved registers, local variables
+
+[PROCEDURE]
+* call procedure: jump to procedure. label, reg, mem.
+* ret: return from procedure where it is called. rsp holds the return address where procedure is lastly called.
+* pop data pushed into stack in procedure before ret. rsp holds return address.
+* local variables: save rsp in rbp temporarily for storing local variables on stack at the end of procedure pop rbp.
+
+[CALLING CONVENTIONS]
+* Microsoft x64 Calling Convention
+   - first 4 parameters: rcx, rdx, r8, r9
+   - others are on the stack
+   - return value: rax
+   - caller saved registers: rax, rcx, rdx, r8, r9, r10, r11. volatile. they can be altered by caller. so store them on stack before call.
+   - caller: procedure which calls other procedure. 
+   - callee saved registers: rbx, rbp, rdi, rsi, r12, r13, r14, r15. non volatile. must be preserved by procedures. 
+   - callee: procedure which is called from other procedure.
+   - rsp is aligned 16 byte boundary.
+   - 32 bytes of shadow space for register parameters need to be allocated on the stack by caller before call.
+   - caller must clean up stack. allocated parameters and shadow space.
+Stack Frame
+   - first 4 parameters: rcx, rdx, r8, r9
+   - current function: local variables + saved registers + old rbp + ret address
+   - calling function: bytes + 32 + space + shadow + 5th param + ...
+* System V AMD64 ABI Calling Convention
