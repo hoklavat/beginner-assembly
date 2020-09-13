@@ -33,3 +33,5 @@ Assembler: SASM
 29-Procedure4
 30-Procedure5
 31-LocalVariables
+32-x64Calling
+33-Macro

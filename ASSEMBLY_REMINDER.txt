@@ -75,7 +75,8 @@ two's complement: 1010 1000 >> 0101 0111 + 1 >> 0101 1000 >> -88 (-2^(N-1) to 2^
   JL, JLE, JNG, JNGE, JNL, JNLE, MUL, IMUL, DIV, IDIV, CBW, CWD, CDQ, CQO, SHL, SAL, SHR, SAR, ROL, RCL, ROR, RCR, 
   CLC, STC, MOVSB, MOVSW, MOVSD, MOVSQ, STOSB, STOSW, STOSD, STOSQ, LODSB, LODSW, LODSD, LODSQ, SCASB, SCASW, SCASD, 
   SCASQ, CMPSB, CMPSW, CMPSD, CMPSQ, CLD, STD, LOOP, REP, REPNE, REPE
-* Directives: DB, DW, DD, DQ, SECTION, .DATA, .TEXT, %INCLUDE, EQU, TIMES, GLOBAL, $-
+* Directives: DB (data byte), DW (data word), DD (data two word), DQ (data four word), SECTION (.DATA, .TEXT), %INCLUDE (library), EQU (equal to), TIMES (multiply), GLOBAL (program entry label), $-(length of array), .LABEL (local label), EXTERN (import standard library function), %DEFINE (single-line macro), %MACRO/%ENDMACRO (multi-line macro), .NOLIST (no listing)
+* Input-Output Macros: PRINT_DEC, PRINT_UDEC, PRINT_HEX, PRINT_STRING, NEWLINE, GET_DEC, GET_UDEC, GET_HEX, GET_STRING
 * XCHG reg-reg, reg-mem, mem-reg (Exchange)
 
 [BRANCHING]
